@@ -54,6 +54,27 @@ git clone https://github.com/JFGAtlas/mcpt && cd mcpt/examples
 npx mcpt run
 ```
 
+## When would I use this?
+
+**1. Building your own MCP server.** The core dev loop. Today, checking that a code change didn't break a tool means restarting the Inspector and clicking through every tool by hand. With mcpt the whole check is one command — change code, `mcpt run`, see green or a precise diff in under a second.
+
+**2. Regression gating in CI.** Tool output is a contract: agents and prompts downstream depend on its exact shape. Snapshot tests freeze that contract, and a pull request that changes any tool's output fails CI with a diff — *before* it silently breaks every client that depends on you.
+
+**3. Vetting and upgrading third-party servers.** You wire a community MCP server into your product, then `v2.1` ships. Did anything you rely on change? Write acceptance tests once for the behaviors you actually use (`mcpt init` gets you 90% of the way), and re-run them on every version bump. Adopt upgrades with evidence instead of hope.
+
+**4. Guarding security boundaries.** The most important MCP tests are negative ones: the filesystem server must keep *refusing* paths outside its sandbox, the database server must keep *rejecting* raw SQL. `expect: { error: true }` pins those refusals down so a refactor can never quietly widen what a tool accepts:
+
+```yaml
+- name: refuses to read outside the sandbox
+  tool: read_file
+  args: { path: /etc/passwd }
+  expect: { error: true }
+```
+
+**5. Performance budgets.** A tool that takes 8 seconds stalls the whole agent conversation. `latency: 500` makes slowness a test failure instead of a vague user complaint, and catches the accidental N+1 query at PR time.
+
+**6. AI-assisted development.** A lot of MCP servers are now written *by* coding agents. mcpt closes that loop: the agent edits code, runs `mcpt run`, and reads the failure diff — no human clicking required. Plain-YAML tests are also trivial for an LLM to write and review, so "add tests" becomes a one-sentence instruction.
+
 ## Writing tests
 
 A test file names the server command, then lists tool calls and what to expect:
