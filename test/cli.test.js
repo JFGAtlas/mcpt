@@ -5,7 +5,7 @@ import { promisify } from 'node:util';
 import { mkdtemp, readFile, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const exec = promisify(execFile);
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -147,7 +147,7 @@ test('init: generates a runnable test file from a live server', async () => {
 });
 
 test('matchers: subset matching, regex, and error semantics', async () => {
-  const { evaluate } = await import(join(root, 'dist', 'matchers.js'));
+  const { evaluate } = await import(pathToFileURL(join(root, 'dist', 'matchers.js')).href);
   const result = {
     content: [{ type: 'text', text: '{"a":1,"b":{"c":[1,2]}}' }],
     isError: false,
