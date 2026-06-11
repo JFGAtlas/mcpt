@@ -1,0 +1,50 @@
+{
+  "name": "mcpt",
+  "version": "0.1.0",
+  "description": "Declarative, language-agnostic test runner for MCP servers. Test any Model Context Protocol server with plain YAML — no SDK, no boilerplate.",
+  "type": "module",
+  "license": "MIT",
+  "author": "JFGAtlas",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JFGAtlas/mcpt.git"
+  },
+  "homepage": "https://github.com/JFGAtlas/mcpt#readme",
+  "bugs": "https://github.com/JFGAtlas/mcpt/issues",
+  "bin": {
+    "mcpt": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "README.zh-CN.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run build && node --test",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "testing",
+    "test-runner",
+    "test-framework",
+    "cli",
+    "llm",
+    "ai",
+    "agent",
+    "snapshot-testing",
+    "ci"
+  ],
+  "dependencies": {
+    "yaml": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  }
+}

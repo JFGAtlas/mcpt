@@ -1,0 +1,16 @@
+{
+  "weather output stays stable over time": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"city\":\"Paris\",\"temperature\":21,\"unit\":\"celsius\",\"condition\":\"sunny\"}"
+      }
+    ],
+    "structuredContent": {
+      "city": "Paris",
+      "temperature": 21,
+      "unit": "celsius",
+      "condition": "sunny"
+    }
+  }
+}

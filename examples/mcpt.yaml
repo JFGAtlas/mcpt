@@ -1,0 +1,44 @@
+# Example test file for the bundled demo server.
+# Run from the examples/ directory:  npx mcpt run
+
+server:
+  command: node
+  args: [demo-server/server.js]
+
+# Fail fast if the server stops exposing these tools
+expectTools: [add, echo, get_weather]
+
+tests:
+  - name: add returns the sum
+    tool: add
+    args: { a: 2, b: 3 }
+    expect:
+      text: "5"
+
+  - name: add rejects non-numeric input
+    tool: add
+    args: { a: oops, b: 3 }
+    expect:
+      error: true
+
+  - name: echo uppercases on request
+    tool: echo
+    args: { message: hello, uppercase: true }
+    expect:
+      contains: HELLO
+      matches: "^[A-Z]+$"
+
+  - name: weather returns structured JSON
+    tool: get_weather
+    args: { city: Tokyo }
+    expect:
+      json:
+        city: Tokyo
+        unit: celsius
+      latency: 1000
+
+  - name: weather output stays stable over time
+    tool: get_weather
+    args: { city: Paris }
+    expect:
+      snapshot: true
