@@ -7,7 +7,7 @@
 No SDK. No boilerplate. Works with servers written in any language.
 
 [![CI](https://github.com/JFGAtlas/mcpt/actions/workflows/ci.yml/badge.svg)](https://github.com/JFGAtlas/mcpt/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/mcpt-cli)](https://www.npmjs.com/package/mcpt-cli)
+[![npm](https://img.shields.io/npm/v/mcpt-runner)](https://www.npmjs.com/package/mcpt-runner)
 [![license](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
 English | [简体中文](./README.zh-CN.md)
@@ -38,14 +38,14 @@ You don't even have to write the first test file yourself. `mcpt init` connects 
 
 ```bash
 # 1. Generate tests from a live server (any MCP server works)
-npx mcpt-cli init -- node ./my-server.js
+npx mcpt-runner init -- node ./my-server.js
 #    └─ writes mcpt.yaml with one test per discovered tool
 
 # 2. Record snapshots, then catch regressions forever
-npx mcpt-cli run
+npx mcpt-runner run
 ```
 
-> The npm package is **`mcpt-cli`** (the bare name was too close to an existing package). Installing it globally with `npm i -g mcpt-cli` gives you the `mcpt` command used throughout these docs.
+> The npm package is **`mcpt-runner`** (the bare name was too close to an existing package). Installing it globally with `npm i -g mcpt-runner` gives you the `mcpt` command used throughout these docs.
 
 That's the whole loop. The first run records each tool's output as a snapshot; every run after that fails if the output drifts.
 
@@ -53,7 +53,7 @@ Want to try it without a server of your own? Clone this repo and run the bundled
 
 ```bash
 git clone https://github.com/JFGAtlas/mcpt && cd mcpt/examples
-npx mcpt-cli run
+npx mcpt-runner run
 ```
 
 ## When would I use this?
@@ -142,7 +142,7 @@ Other knobs: top-level `timeout` (ms, default 10000) and per-test `timeout`; `ex
 ```yaml
 # .github/workflows/test.yml
 - run: npm ci
-- run: npx mcpt-cli run
+- run: npx mcpt-runner run
 ```
 
 Commit the generated `__snapshots__/` directory so regressions are caught in pull requests.
