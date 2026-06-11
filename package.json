@@ -1,5 +1,5 @@
 {
-  "name": "mcpt",
+  "name": "mcpt-cli",
   "version": "0.1.0",
   "description": "Declarative, language-agnostic test runner for MCP servers. Test any Model Context Protocol server with plain YAML — no SDK, no boilerplate.",
   "type": "module",

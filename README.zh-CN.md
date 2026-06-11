@@ -7,7 +7,7 @@
 不需要 SDK，没有样板代码，任何语言写的服务器都能测。
 
 [![CI](https://github.com/JFGAtlas/mcpt/actions/workflows/ci.yml/badge.svg)](https://github.com/JFGAtlas/mcpt/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/mcpt)](https://www.npmjs.com/package/mcpt)
+[![npm](https://img.shields.io/npm/v/mcpt-cli)](https://www.npmjs.com/package/mcpt-cli)
 [![license](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
 [English](./README.md) | 简体中文
@@ -38,12 +38,14 @@ tests: 4 passed (0.21s)
 
 ```bash
 # 1. 从运行中的服务器自动生成测试（任何 MCP 服务器都可以）
-npx mcpt init -- node ./my-server.js
+npx mcpt-cli init -- node ./my-server.js
 #    └─ 生成 mcpt.yaml，每个发现的工具一条测试
 
 # 2. 录制快照，之后每次运行都是回归测试
-npx mcpt run
+npx mcpt-cli run
 ```
+
+> npm 包名为 **`mcpt-cli`**（裸名与已有的包过于相似，被 npm 防误植规则拦截）。全局安装 `npm i -g mcpt-cli` 后，得到的命令就是文档中通篇使用的 `mcpt`。
 
 整个流程就这么多。第一次运行会把每个工具的输出录成快照，之后任何一次输出漂移都会让测试失败。
 
@@ -51,7 +53,7 @@ npx mcpt run
 
 ```bash
 git clone https://github.com/JFGAtlas/mcpt && cd mcpt/examples
-npx mcpt run
+npx mcpt-cli run
 ```
 
 ## 应用场景
@@ -140,7 +142,7 @@ tests:
 ```yaml
 # .github/workflows/test.yml
 - run: npm ci
-- run: npx mcpt run
+- run: npx mcpt-cli run
 ```
 
 把生成的 `__snapshots__/` 目录提交进版本库，回归就能在 Pull Request 里被拦下来。
