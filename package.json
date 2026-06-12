@@ -1,6 +1,6 @@
 {
   "name": "mcpt-runner",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Declarative, language-agnostic test runner for MCP servers. Test any Model Context Protocol server with plain YAML — no SDK, no boilerplate.",
   "type": "module",
   "license": "MIT",

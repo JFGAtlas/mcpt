@@ -67,11 +67,17 @@ export class McpClient {
       }
     });
 
-    const result = (await this.request('initialize', {
-      protocolVersion: PROTOCOL_VERSION,
-      capabilities: {},
-      clientInfo: { name: 'mcpt', version: '0.1.0' },
-    })) as {
+    // Server startup can include a package download (npx/uvx cold start),
+    // so the handshake gets a more generous timeout than tool calls.
+    const result = (await this.request(
+      'initialize',
+      {
+        protocolVersion: PROTOCOL_VERSION,
+        capabilities: {},
+        clientInfo: { name: 'mcpt', version: '0.1.0' },
+      },
+      Math.max(this.defaultTimeoutMs, 60_000),
+    )) as {
       protocolVersion?: string;
       serverInfo?: { name?: string; version?: string };
     };

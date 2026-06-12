@@ -151,7 +151,17 @@ async function cmdInit(args: string[]): Promise<number> {
   }
 
   console.log(dim(`starting ${serverArgs.join(' ')} ...`));
-  const yaml = await generateTestFile({ command: serverArgs[0], args: serverArgs.slice(1) });
+  let yaml: string;
+  try {
+    yaml = await generateTestFile({ command: serverArgs[0], args: serverArgs.slice(1) });
+  } catch (err) {
+    console.error(red(`Could not connect to the server: ${(err as Error).message}`));
+    console.error(red(`无法连接到服务器，错误详情见上。`));
+    console.error('');
+    console.error(`If the command uses npx/uvx, the first run downloads the package and can be slow — just try again.`);
+    console.error(`如果命令用了 npx/uvx，第一次运行需要先下载包，可能较慢 —— 直接重试一次通常就能成功。`);
+    return 1;
+  }
   await writeFile(out, yaml);
   const testCount = (yaml.match(/^  - name:/gm) ?? []).length;
   console.log(`${bold(out)} written with ${testCount} test(s).`);
